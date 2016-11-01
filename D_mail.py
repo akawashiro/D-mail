@@ -14,6 +14,7 @@ if __name__ == '__main__':
     psr.add_argument('--user', required=True)
     psr.add_argument('--password', required=True)
     psr.add_argument('--to', default="None")
+    psr.add_argument('--frm', default="None")
     psr.add_argument('--hour', required=True)
     psr.add_argument('--body', required=True)
     args = psr.parse_args()
@@ -24,6 +25,10 @@ if __name__ == '__main__':
         to = args.user
     else:
         to = args.to
+    if args.frm == "None":
+        frm = args.user
+    else:
+        frm = args.to
 
     sub = ''
     body = args.body
@@ -33,7 +38,7 @@ if __name__ == '__main__':
         host, port = 'smtp.gmail.com', 465
         msg = MIMEText(b.encode('utf-8'))
         msg['Subject'] = sub
-        msg['From'] = username
+        msg['From'] = frm
         msg['To'] = to
         n = dt.now()
         msg['Date'] = formatdate(time.mktime((n.year, n.month,
